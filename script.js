@@ -465,23 +465,24 @@ function cambiarCategoria(cat) {
     const id = "cat-" + cat.replace(/\s+/g, "");
     const bloque = document.getElementById(id);
 
-    // 1. Ocultar todos y mostrar solo el que clickeaste
+    // 1. Mostrar solo la categoría seleccionada
     document.querySelectorAll(".bloque-categoria").forEach(d => {
         d.style.display = d.id === id ? "block" : "none";
     });
 
-    // 2. Forzar el scroll al inicio del bloque recién mostrado
+    // 2. Scroll preciso al inicio del bloque
     if (bloque) {
-        // Usamos un pequeño retraso para que el navegador "entienda" 
-        // que el bloque ahora mide algo y tiene una posición.
         setTimeout(() => {
-            const y = bloque.getBoundingClientRect().top + window.pageYOffset;
-            
+            // Calculamos la posición del bloque respecto a la página entera
+            const rect = bloque.getBoundingClientRect();
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const targetY = rect.top + scrollTop;
+
             window.scrollTo({
-                top: y - 10, // Ese -10 es para que no quede pegado al borde
+                top: targetY - 10, // -10px para que no quede pegado al borde superior
                 behavior: 'smooth'
             });
-        }, 60);
+        }, 100); // Un pequeño margen de tiempo para que el navegador renderice el bloque
     }
 }
 function ajustarEstiloMetodo(radio) {
