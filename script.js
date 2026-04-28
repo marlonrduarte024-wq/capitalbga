@@ -464,20 +464,20 @@ function verificarHorario() {
 function cambiarCategoria(cat) {
     const id = "cat-" + cat.replace(/\s+/g, "");
     const bloque = document.getElementById(id);
-    const nav = document.getElementById("nav-categorias");
+    const contenedorMenu = document.getElementById("contenedor-menu");
 
     // 1. Mostrar solo la categoría seleccionada
     document.querySelectorAll(".bloque-categoria").forEach(d => {
         d.style.display = d.id === id ? "block" : "none";
     });
 
-    // 2. Scroll hasta el final del listado de grupos (nav)
-    if (nav) {
-        // Calculamos la posición superior del nav + su altura total
-        const posicionDestino = nav.offsetTop + nav.offsetHeight;
+    // 2. Scroll al inicio del contenedor de productos
+    if (contenedorMenu) {
+        // Obtenemos la distancia fija desde el top de la página hasta el div de productos
+        const y = contenedorMenu.getBoundingClientRect().top + window.pageYOffset;
 
         window.scrollTo({
-            top: posicionDestino,
+            top: y,
             behavior: 'smooth'
         });
     }
