@@ -465,17 +465,24 @@ function cambiarCategoria(cat) {
     const id = "cat-" + cat.replace(/\s+/g, "");
     const bloque = document.getElementById(id);
 
-    // 1. Ocultar todos y mostrar el seleccionado
+    // 1. Ocultar todos los bloques y mostrar solo el seleccionado
     document.querySelectorAll(".bloque-categoria").forEach(d => {
         d.style.display = d.id === id ? "block" : "none";
     });
 
-    // 2. Scroll con margen para ver el banner/título
+    // 2. Ejecutar el scroll hacia el inicio del bloque mostrado
     if (bloque) {
-        const yOffset = -100; // Ajusta este valor según el alto de tu menú fijo o banner
-        const y = bloque.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        // Usamos un pequeño timeout para asegurar que el navegador 
+        // ya procesó el cambio de 'display: block' antes de medir la posición
+        setTimeout(() => {
+            const yOffset = -20; // Espacio de cortesía para que no pegue al borde superior
+            const y = bloque.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
-        window.scrollTo({ top: y, behavior: 'smooth' });
+            window.scrollTo({
+                top: y,
+                behavior: 'smooth'
+            });
+        }, 50);
     }
 }
 
