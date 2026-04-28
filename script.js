@@ -463,14 +463,19 @@ function verificarHorario() {
 
 function cambiarCategoria(cat) {
     const id = "cat-" + cat.replace(/\s+/g, "");
-    const bloque = document.getElementById(id); // Obtenemos el bloque de la categoría
+    const bloque = document.getElementById(id);
 
-    // 1. Ocultamos todos y mostramos el seleccionado
-    document.querySelectorAll(".bloque-categoria").forEach(d => d.style.display = d.id === id ? "block" : "none");
+    // 1. Ocultar todos y mostrar el seleccionado
+    document.querySelectorAll(".bloque-categoria").forEach(d => {
+        d.style.display = d.id === id ? "block" : "none";
+    });
 
-    // 2. HACER SCROLL AUTOMÁTICO
+    // 2. Scroll con margen para ver el banner/título
     if (bloque) {
-        bloque.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const yOffset = -100; // Ajusta este valor según el alto de tu menú fijo o banner
+        const y = bloque.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+        window.scrollTo({ top: y, behavior: 'smooth' });
     }
 }
 
