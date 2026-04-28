@@ -1,0 +1,563 @@
+{
+    "actualizado": "2026-04-10 16:53:28",
+    "menu": {
+        "ADICIONALES ": [
+            {
+                "codigo": "27",
+                "articulo": "AD CARNE HAMBURGUESA",
+                "precio": 7000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "40",
+                "articulo": "AD JUGO LIMON",
+                "precio": 2000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "031",
+                "articulo": "AD POLLO DESMECHADO PQ",
+                "precio": 5000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "53",
+                "articulo": "AD QUESO RALLADO",
+                "precio": 1000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "86",
+                "articulo": "AD QUESO TAJADO",
+                "precio": 1000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "120",
+                "articulo": "AD SALSA",
+                "precio": 1000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "034",
+                "articulo": "CHORIZO",
+                "precio": 6000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "65",
+                "articulo": "ENTRADAS AREPAS X2",
+                "precio": 5000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "035",
+                "articulo": "SALCHICHA AMERICANA",
+                "precio": 6000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "036",
+                "articulo": "TOCINETA X 3",
+                "precio": 5000.0,
+                "iva": 0.0
+            }
+        ],
+        "BEBIDAS ": [
+            {
+                "codigo": "155",
+                "articulo": "AGRANDA 1.5 COCA COLA",
+                "precio": 8000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "156",
+                "articulo": "AGRANDA PET 400 COCA-COLA",
+                "precio": 3500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "137",
+                "articulo": "AGRANDA ZERO PET 400",
+                "precio": 3500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "038",
+                "articulo": "AGUA BRISA GAS PET 600 ML",
+                "precio": 4000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "046",
+                "articulo": "AGUA BRISA PET 600 ML",
+                "precio": 4000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "052",
+                "articulo": "AGUA BRISA SABOR PET 600 ML",
+                "precio": 4500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "113",
+                "articulo": "CERVEZA",
+                "precio": 6000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "045",
+                "articulo": "COCA COLA 1.5 L",
+                "precio": 11000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "47",
+                "articulo": "COCA COLA 250 ZERO",
+                "precio": 3000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "048",
+                "articulo": "COCA COLA 400 ML",
+                "precio": 4500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "040",
+                "articulo": "COCA COLA 400 ML ZERO",
+                "precio": 4500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "89",
+                "articulo": "COCA COLA LATA 269ML",
+                "precio": 4500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "053",
+                "articulo": "CORONITA",
+                "precio": 6000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "123",
+                "articulo": "COSTEÑITA",
+                "precio": 4000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "050",
+                "articulo": "GASEOSAS",
+                "precio": 4500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "125",
+                "articulo": "GRANIZADA",
+                "precio": 10000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "112",
+                "articulo": "GUARAPO ANTONIO GOMEZ",
+                "precio": 11000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "189",
+                "articulo": "JUGO DEL VALLE 1.5",
+                "precio": 11000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "124",
+                "articulo": "MICHELADA",
+                "precio": 2000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "152",
+                "articulo": "MUJER GRANIZADA",
+                "precio": 0.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "188",
+                "articulo": "QUATRO 1.5",
+                "precio": 11000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "5000",
+                "articulo": "RESERVA DE CUMPLEAÑOS",
+                "precio": 50000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "122",
+                "articulo": "SODA 1.5 LT",
+                "precio": 11000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "126",
+                "articulo": "SODA FRUTAL",
+                "precio": 10000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "127",
+                "articulo": "SODA HATSU FRUTAL",
+                "precio": 8000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "039",
+                "articulo": "SODA PET 400 ML",
+                "precio": 4500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "056",
+                "articulo": "TE HATSU",
+                "precio": 8000.0,
+                "iva": 0.0
+            }
+        ],
+        "HAMBURGUESAS": [
+            {
+                "codigo": "134",
+                "articulo": "BONITA INDIVIDUAL",
+                "precio": 26500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "106",
+                "articulo": "CHEESE BACON INDIVIDUAL",
+                "precio": 32500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "84",
+                "articulo": "CRISPY INDIVIDUAL",
+                "precio": 32500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "131",
+                "articulo": "DOBLE TREMENDA BUCARA",
+                "precio": 49900.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "04",
+                "articulo": "H CON POLLO + PAPA",
+                "precio": 22000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "03",
+                "articulo": "H CON POLLO SIN PAPA",
+                "precio": 17000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "05",
+                "articulo": "H CON TOCINETA + PAPA",
+                "precio": 22000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "06",
+                "articulo": "H CON TOCINETA SIN PAPA",
+                "precio": 17000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "12",
+                "articulo": "H DOBLE CARNE C POLLO SIN PAPA",
+                "precio": 23500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "11",
+                "articulo": "H DOBLE CARNE C POLLO+ PAPA",
+                "precio": 28500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "14",
+                "articulo": "H DOBLE CARNE C TOCINETA SIN PAPA",
+                "precio": 22500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "13",
+                "articulo": "H DOBLE CARNE C TOCINETA+PAPA",
+                "precio": 27500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "16",
+                "articulo": "H DOBLE CARNE ESPECIAL SIN PAPA",
+                "precio": 26500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "15",
+                "articulo": "H DOBLE CARNE ESPECIAL+PAPA",
+                "precio": 31500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "10",
+                "articulo": "H DOBLE CARNE SIN PAPA",
+                "precio": 21000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "09",
+                "articulo": "H DOBLE CARNE+PAPA",
+                "precio": 26000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "17",
+                "articulo": "H ESPECIAL CHORIZO +PAPA",
+                "precio": 27000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "18",
+                "articulo": "H ESPECIAL CHORIZO SIN PAPA",
+                "precio": 22000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "08",
+                "articulo": "H ESPECIAL SIN PAPA",
+                "precio": 20000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "07",
+                "articulo": "H ESPECIAL+PAPA",
+                "precio": 25000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "02",
+                "articulo": "H SENCILLA SIN PAPA",
+                "precio": 13500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "01",
+                "articulo": "H SENCILLA+PAPA",
+                "precio": 18500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "133",
+                "articulo": "LA PODEROSA INDIVIDUAL",
+                "precio": 34500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "140",
+                "articulo": "STREET 43",
+                "precio": 26500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "153",
+                "articulo": "TREMENDA",
+                "precio": 26500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "170",
+                "articulo": "TREMENDA PROMO",
+                "precio": 49900.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "145",
+                "articulo": "TRIPLE PECADO INV",
+                "precio": 32500.0,
+                "iva": 0.0
+            }
+        ],
+        "PAPAS ": [
+            {
+                "codigo": "027",
+                "articulo": "CHORIPAPA",
+                "precio": 27500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "025",
+                "articulo": "PAPAS DISTRITO",
+                "precio": 20000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "028",
+                "articulo": "PAPAS LOCAS",
+                "precio": 37500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "49",
+                "articulo": "PAPITAS DISTRITO",
+                "precio": 7000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "130",
+                "articulo": "REVOLCON MIXTO",
+                "precio": 29000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "026",
+                "articulo": "SALCHIPAPA",
+                "precio": 25500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "032",
+                "articulo": "SALCHIPAPA DISTRITO",
+                "precio": 29000.0,
+                "iva": 0.0
+            }
+        ],
+        "PERRO MONUMENTAL": [
+            {
+                "codigo": "21",
+                "articulo": "PERRO CON POLLO +PAPA",
+                "precio": 32500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "22",
+                "articulo": "PERRO CON POLLO SIN PAPA",
+                "precio": 27500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "23",
+                "articulo": "PERRO CON TOCINETA +PAPA",
+                "precio": 29900.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "24",
+                "articulo": "PERRO CON TOCINETA SIN PAPA",
+                "precio": 24900.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "121",
+                "articulo": "PERRO DISTRITO +PAPA",
+                "precio": 35000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "55",
+                "articulo": "PERRO DISTRITO SIN PAPA",
+                "precio": 30000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "25",
+                "articulo": "PERRO ESPECIAL +PAPA",
+                "precio": 35000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "26",
+                "articulo": "PERRO ESPECIAL SIN PAPA",
+                "precio": 30000.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "19",
+                "articulo": "PERRO SENCILLO + PAPA",
+                "precio": 29500.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "20",
+                "articulo": "PERRO SENCILLO SIN PAPA",
+                "precio": 24500.0,
+                "iva": 0.0
+            }
+        ],
+        "PROMOS": [
+            {
+                "codigo": "99",
+                "articulo": "COMBO 3X2",
+                "precio": 67900.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "41",
+                "articulo": "COMBO DISTRITO",
+                "precio": 44900.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "83",
+                "articulo": "PROMO BUCARA CRISPY",
+                "precio": 49900.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "190",
+                "articulo": "PROMO BURGUER POLLO",
+                "precio": 19900.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "101",
+                "articulo": "PROMO CHEESE BACON",
+                "precio": 49900.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "50",
+                "articulo": "PROMO GLAZE BACON",
+                "precio": 49900.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "129",
+                "articulo": "PROMO LA BONITA",
+                "precio": 41900.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "132",
+                "articulo": "PROMO LA PODEROSA",
+                "precio": 49900.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "160",
+                "articulo": "PROMO SAN VALENTIN",
+                "precio": 49900.0,
+                "iva": 0.0
+            },
+            {
+                "codigo": "161",
+                "articulo": "PROMO SAN VALENTIN DOMICILIO",
+                "precio": 49900.0,
+                "iva": 0.0
+            }
+        ]
+    }
+}

@@ -1,0 +1,64 @@
+{
+  "portada": {
+    "banner": "https://res.cloudinary.com/dwybifbi1/image/upload/v1777390086/menu/portada/portada_banner.jpg",
+    "logo": "https://res.cloudinary.com/dwybifbi1/image/upload/v1777390632/menu/portada/portada_logo.png"
+  },
+  "orden_categorias": [
+    "CARNES Y MAS",
+    "HAMBURGUESAS",
+    "PICADAS Y PARRILLADAS",
+    "PERROS",
+    "BEBIDAS"
+  ],
+  "banners_categoria": {
+    "POLLOS": "c:/posred/bot/web/assets/categorias/POLLOS.png",
+    "COMIDAS RAPIDAS": "c:/posred/bot/web/assets/categorias/COMIDAS_RAPIDAS.png",
+    "HAMBURGUESAS": "https://res.cloudinary.com/di0wadljs/image/upload/v1775854421/menu/portada/cat_HAMBURGUESAS.png",
+    "CARNES Y MAS": "https://res.cloudinary.com/di0wadljs/image/upload/v1775767484/menu/portada/cat_CARNES_Y_MAS.jpg",
+    "PERRO MONUMENTAL": "https://res.cloudinary.com/di0wadljs/image/upload/v1775854659/menu/portada/cat_PERRO_MONUMENTAL.png",
+    "PAPAS ": "https://res.cloudinary.com/di0wadljs/image/upload/v1775854839/menu/portada/cat_PAPAS_.png",
+    "PROMOS": "https://res.cloudinary.com/di0wadljs/image/upload/v1775855732/menu/portada/cat_PROMOS.png"
+  },
+  "horarios": {
+    "Lunes": {
+      "inicio": "10:00",
+      "fin": "23:00",
+      "cerrado": false
+    },
+    "Martes": {
+      "inicio": "15:00",
+      "fin": "23:00",
+      "cerrado": false
+    },
+    "Miércoles": {
+      "inicio": "17:00",
+      "fin": "23:00",
+      "cerrado": false
+    },
+    "Jueves": {
+      "inicio": "8:00",
+      "fin": "23:00",
+      "cerrado": false
+    },
+    "Viernes": {
+      "inicio": "10:00",
+      "fin": "23:00",
+      "cerrado": false
+    },
+    "Sábado": {
+      "inicio": "18:00",
+      "fin": "23:00",
+      "cerrado": false
+    },
+    "Domingo": {
+      "inicio": "18:00",
+      "fin": "23:00",
+      "cerrado": false
+    }
+  },
+  "recomendados": [
+    "133",
+    "028",
+    "11"
+  ]
+}
