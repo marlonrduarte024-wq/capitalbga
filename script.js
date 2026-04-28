@@ -464,21 +464,21 @@ function verificarHorario() {
 function cambiarCategoria(cat) {
     const id = "cat-" + cat.replace(/\s+/g, "");
     const bloque = document.getElementById(id);
+    const contenedorGrupos = document.querySelector(".nav-categorias"); // Ajusta el selector si tu nav tiene otra clase
 
-    // 1. Mostramos solo la categoría seleccionada
+    // 1. Mostrar solo la categoría seleccionada
     document.querySelectorAll(".bloque-categoria").forEach(d => {
         d.style.display = d.id === id ? "block" : "none";
     });
 
-    // 2. Scroll exacto al inicio del bloque (donde empieza el banner)
-    if (bloque) {
-        // Un delay mínimo para que el navegador reconozca el display:block
-        setTimeout(() => {
-            bloque.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start' // Esto lo alinea al borde superior exacto del bloque
-            });
-        }, 10);
+    // 2. Hacer scroll hasta el final del listado de grupos
+    if (contenedorGrupos) {
+        const posicionFinalGrupos = contenedorGrupos.offsetTop + contenedorGrupos.offsetHeight;
+
+        window.scrollTo({
+            top: posicionFinalGrupos,
+            behavior: 'smooth'
+        });
     }
 }
 
