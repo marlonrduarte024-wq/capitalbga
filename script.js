@@ -464,25 +464,25 @@ function verificarHorario() {
 function cambiarCategoria(cat) {
     const id = "cat-" + cat.replace(/\s+/g, "");
     const bloque = document.getElementById(id);
+    const menuCont = document.getElementById("menu");
 
     // 1. Mostrar solo la categoría seleccionada
     document.querySelectorAll(".bloque-categoria").forEach(d => {
         d.style.display = d.id === id ? "block" : "none";
     });
 
-    // 2. Scroll preciso al inicio del bloque
-    if (bloque) {
+    // 2. Scroll al inicio del contenedor principal del menú
+    if (menuCont) {
+        // Usamos un pequeño retraso para que el navegador 
+        // procese que el bloque nuevo ahora ocupa espacio.
         setTimeout(() => {
-            // Calculamos la posición del bloque respecto a la página entera
-            const rect = bloque.getBoundingClientRect();
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const targetY = rect.top + scrollTop;
-
+            const y = menuCont.getBoundingClientRect().top + window.pageYOffset;
+            
             window.scrollTo({
-                top: targetY - 10, // -10px para que no quede pegado al borde superior
+                top: y - 10, // Pequeño margen para que el banner no pegue al borde
                 behavior: 'smooth'
             });
-        }, 100); // Un pequeño margen de tiempo para que el navegador renderice el bloque
+        }, 80);
     }
 }
 function ajustarEstiloMetodo(radio) {
