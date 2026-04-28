@@ -361,7 +361,7 @@ function mostrarHorarios() {
 }
 
 function mostrarUbicacion() {
-    const direccion = "Calle 43 # 34-25 , Barrio El Prado";
+    const direccion = "Carerra 27 # 84-46 , Local edificio Terranova";
     
     Swal.fire({
         title: '📍 Ubicación',
