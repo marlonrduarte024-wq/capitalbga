@@ -463,17 +463,7 @@ function verificarHorario() {
 
 function cambiarCategoria(cat) {
     const id = "cat-" + cat.replace(/\s+/g, "");
-    const bloque = document.getElementById(id);
-
-    // 1. Solo ocultamos y mostramos (lo que ya funcionaba bien)
-    document.querySelectorAll(".bloque-categoria").forEach(d => {
-        d.style.display = d.id === id ? "block" : "none";
-    });
-
-    // 2. Scroll simple y directo al bloque seleccionado
-    if (bloque) {
-        bloque.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    document.querySelectorAll(".bloque-categoria").forEach(d => d.style.display = d.id === id ? "block" : "none");
 }
 function ajustarEstiloMetodo(radio) {
     document.querySelectorAll('.btn-metodo').forEach(el => {
