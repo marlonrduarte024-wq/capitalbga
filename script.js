@@ -361,7 +361,7 @@ function mostrarHorarios() {
 }
 
 function mostrarUbicacion() {
-    const direccion = "Carerra 27 # 84-46 , Local edificio Terranova";
+    const direccion = "Cra. 27 #84-46 Local edf, terranova, Bucaramanga, Santander";
     
     Swal.fire({
         title: '📍 Ubicación',
