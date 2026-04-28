@@ -463,7 +463,15 @@ function verificarHorario() {
 
 function cambiarCategoria(cat) {
     const id = "cat-" + cat.replace(/\s+/g, "");
+    const bloque = document.getElementById(id); // Obtenemos el bloque de la categoría
+
+    // 1. Ocultamos todos y mostramos el seleccionado
     document.querySelectorAll(".bloque-categoria").forEach(d => d.style.display = d.id === id ? "block" : "none");
+
+    // 2. HACER SCROLL AUTOMÁTICO
+    if (bloque) {
+        bloque.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 }
 
 function ajustarEstiloMetodo(radio) {
