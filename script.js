@@ -464,19 +464,20 @@ function verificarHorario() {
 function cambiarCategoria(cat) {
     const id = "cat-" + cat.replace(/\s+/g, "");
     const bloque = document.getElementById(id);
-    const contenedorGrupos = document.querySelector(".nav-categorias"); // Ajusta el selector si tu nav tiene otra clase
+    const nav = document.getElementById("nav-categorias");
 
     // 1. Mostrar solo la categoría seleccionada
     document.querySelectorAll(".bloque-categoria").forEach(d => {
         d.style.display = d.id === id ? "block" : "none";
     });
 
-    // 2. Hacer scroll hasta el final del listado de grupos
-    if (contenedorGrupos) {
-        const posicionFinalGrupos = contenedorGrupos.offsetTop + contenedorGrupos.offsetHeight;
+    // 2. Scroll hasta el final del listado de grupos (nav)
+    if (nav) {
+        // Calculamos la posición superior del nav + su altura total
+        const posicionDestino = nav.offsetTop + nav.offsetHeight;
 
         window.scrollTo({
-            top: posicionFinalGrupos,
+            top: posicionDestino,
             behavior: 'smooth'
         });
     }
