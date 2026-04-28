@@ -464,22 +464,15 @@ function verificarHorario() {
 function cambiarCategoria(cat) {
     const id = "cat-" + cat.replace(/\s+/g, "");
     const bloque = document.getElementById(id);
-    const navCont = document.getElementById("nav-categorias");
 
-    // 1. Mostrar solo la categoría seleccionada
+    // 1. Solo ocultamos y mostramos (lo que ya funcionaba bien)
     document.querySelectorAll(".bloque-categoria").forEach(d => {
         d.style.display = d.id === id ? "block" : "none";
     });
 
-    // 2. Scroll al punto exacto donde termina la barra de categorías
-    if (navCont) {
-        // Calculamos la posición del nav + su altura para quedar justo debajo
-        const y = navCont.getBoundingClientRect().bottom + window.pageYOffset;
-
-        window.scrollTo({
-            top: y, 
-            behavior: 'smooth'
-        });
+    // 2. Scroll simple y directo al bloque seleccionado
+    if (bloque) {
+        bloque.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
 function ajustarEstiloMetodo(radio) {
