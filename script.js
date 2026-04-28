@@ -9,7 +9,7 @@ let imagenes = {};
 let acompanamientosConfig = { grupos: {}, productos: {} };
 let productoModal = null;
 
-const BUCKET_URL = "https://rvbllqsbkizsgcdrdhtp.supabase.co/storage/v1/object/public/conf_pagina/menu_config.json";
+const BUCKET_URL = "https://rvbllqsbkizsgcdrdhtp.supabase.co/storage/v1/object/public/conf_pagina";
 const cb = `?t=${new Date().getTime()}`; 
 
 // ============================================================
