@@ -465,24 +465,20 @@ function cambiarCategoria(cat) {
     const id = "cat-" + cat.replace(/\s+/g, "");
     const bloque = document.getElementById(id);
 
-    // 1. Ocultar todos los bloques y mostrar solo el seleccionado
+    // 1. Mostramos solo la categoría seleccionada
     document.querySelectorAll(".bloque-categoria").forEach(d => {
         d.style.display = d.id === id ? "block" : "none";
     });
 
-    // 2. Ejecutar el scroll hacia el inicio del bloque mostrado
+    // 2. Scroll exacto al inicio del bloque (donde empieza el banner)
     if (bloque) {
-        // Usamos un pequeño timeout para asegurar que el navegador 
-        // ya procesó el cambio de 'display: block' antes de medir la posición
+        // Un delay mínimo para que el navegador reconozca el display:block
         setTimeout(() => {
-            const yOffset = -20; // Espacio de cortesía para que no pegue al borde superior
-            const y = bloque.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-            window.scrollTo({
-                top: y,
-                behavior: 'smooth'
+            bloque.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start' // Esto lo alinea al borde superior exacto del bloque
             });
-        }, 50);
+        }, 10);
     }
 }
 
