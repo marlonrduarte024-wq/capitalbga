@@ -640,33 +640,33 @@ img:not([src]) {
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-/* Sidebar */
+
+/* SIDEBAR (MENÚ LATERAL) */
 .sidebar {
     position: fixed;
     top: 0;
-    left: -280px; /* Escondido */
+    left: -300px;
     width: 280px;
     height: 100%;
-    background: white;
+    background: var(--color-card); /* Fondo negro suave */
     z-index: 1000;
-    transition: 0.3s;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 5px 0 15px rgba(0,0,0,0.5);
     display: flex;
     flex-direction: column;
 }
 
 .sidebar.activo {
-    left: 0; /* Se muestra */
+    left: 0;
 }
 
 .sidebar-header {
-    padding: 20px;
-    background: #f8f8f8;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #ddd;
+    padding: 25px 20px;
+    background: var(--color-fondo);
+    border-bottom: 1px solid var(--color-borde);
+    color: var(--color-principal);
 }
+
 
 .categorias-nav {
     overflow-y: auto;
@@ -677,25 +677,25 @@ img:not([src]) {
 }
 
 .categorias-nav button {
-    text-align: center; /* Centrar texto del grupo */
-    padding: 18px; 
-    margin-bottom: 8px;
-    border: 1px solid #eee;
-    background: #fff;
-    font-size: 1.1rem;
-    font-weight: 600;
+    text-align: center;
+    padding: 18px;
+    margin: 5px 15px;
+    border: 1px solid var(--color-borde);
+    background: var(--color-fondo);
+    color: var(--color-texto-secundario);
     border-radius: 12px;
-    width: 100%;
-    color: #333;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: 0.2s;
 }
 
 .categorias-nav button.activo {
-    background: #000;
-    color: #fff;
-    border-color: #000;
+    background: var(--color-principal);
+    color: #000;
+    border-color: var(--color-acento);
 }
 
-/* Oscurecer el fondo */
+/* OVERLAY OSCURO */
 #overlay-sidebar {
     display: none;
     position: fixed;
@@ -703,7 +703,8 @@ img:not([src]) {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(3px); /* Efecto de desenfoque al fondo */
     z-index: 999;
 }
 
@@ -713,42 +714,40 @@ img:not([src]) {
 
 
 
-/* Contenedor Flotante fijo en pantalla */
+
+/* CONTENEDOR FLOTANTE (Fijo abajo) */
 .contenedor-flotante-menu {
     position: fixed;
-    bottom: 20px; /* Distancia desde abajo */
+    bottom: 30px;
     left: 50%;
-    transform: translateX(-50%); /* Centrado perfecto */
+    transform: translateX(-50%);
     width: 100%;
     display: flex;
     justify-content: center;
-    z-index: 999; /* Por encima de todo */
-    pointer-events: none; /* Para que no bloquee clicks en el fondo */
+    z-index: 999;
+    pointer-events: none;
 }
 
-/* El botón grande y llamativo */
+/* BOTÓN DE CATEGORÍAS */
 .btn-menu-lateral {
-    pointer-events: auto; /* Reactivamos clicks solo en el botón */
-    background: #000;
-    color: #fff;
+    pointer-events: auto;
+    background: var(--color-principal); /* Amarillo hamburguesa */
+    color: #000; /* Texto negro para contraste con el amarillo */
     border: none;
-    padding: 16px 0;
+    padding: 18px 0;
     border-radius: 50px;
     font-size: 1.1rem;
-    font-weight: 700;
+    font-weight: 800;
     text-transform: uppercase;
-    width: 70%; /* Un poco más estilizado */
-    max-width: 300px;
+    width: 75%;
+    max-width: 320px;
     cursor: pointer;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+    box-shadow: 0 10px 25px rgba(242, 183, 5, 0.3); /* Sombra con el color de marca */
+    transition: all 0.3s ease;
+    border: 2px solid var(--color-acento);
 }
 
-/* Efecto visual al tocarlo */
 .btn-menu-lateral:active {
-    transform: scale(0.95);
-    background: #222;
+    transform: scale(0.92);
+    background: var(--color-secundario);
 }
