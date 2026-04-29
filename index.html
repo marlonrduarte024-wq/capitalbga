@@ -40,10 +40,19 @@
   </div>
 </header>
 
-<div class="container">
-  <nav id="nav-categorias" class="categorias-nav"></nav>
-  <main id="menu"></main>
+<button onclick="toggleCategorias()" class="btn-menu-lateral">
+   ☰ Categorías
+</button>
+
+<div id="sidebar-categorias" class="sidebar">
+    <div class="sidebar-header">
+        <h3>Menú</h3>
+        <button onclick="toggleCategorias()" class="btn-cerrar">✕</button>
+    </div>
+    <nav id="nav-categorias" class="categorias-nav">
+        </nav>
 </div>
+<div id="overlay-sidebar" onclick="toggleCategorias()"></div>
 
 <button class="btn-carrito-flotante" onclick="toggleCarrito()">
   🛒 <span id="carrito-count">0</span>
