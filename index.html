@@ -40,9 +40,11 @@
   </div>
 </header>
 
-<button onclick="toggleCategorias()" class="btn-menu-lateral">
-   ☰ Categorías
-</button>
+<div class="contenedor-flotante-menu">
+    <button onclick="toggleCategorias()" class="btn-menu-lateral">
+       ☰ Categorías
+    </button>
+</div>
 
 <div id="sidebar-categorias" class="sidebar">
     <div class="sidebar-header">
@@ -50,9 +52,13 @@
         <button onclick="toggleCategorias()" class="btn-cerrar">✕</button>
     </div>
     <nav id="nav-categorias" class="categorias-nav">
-        </nav>
+    </nav>
 </div>
+
 <div id="overlay-sidebar" onclick="toggleCategorias()"></div>
+
+<main id="menu" class="container">
+    </main>
 
 <button class="btn-carrito-flotante" onclick="toggleCarrito()">
   🛒 <span id="carrito-count">0</span>
