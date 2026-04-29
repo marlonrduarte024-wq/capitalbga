@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Distrito | Gestión</title>
+  <title>Admin Capital| Gestión</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -46,7 +46,7 @@
 <body>
 
 <div id="login-container">
-  <h2>Distrito Admin</h2>
+  <h2>capital Admin</h2>
   <input type="email" id="user_email" class="input-login" placeholder="Correo">
   <input type="password" id="user_password" class="input-login" placeholder="Contraseña">
   <button id="btn-login-action" class="btn btn-finalizar">Entrar</button>
@@ -67,9 +67,9 @@
 </div>
 
 <script>
-  const URL_DB = "https://mmtgjmxfvuzkktktergc.supabase.co";
-  const KEY_DB = "sb_publishable_-xeWh1E1WCqs7ABAvAF0TA_hafx6fpV";
-  const BASE_STORAGE = "https://mmtgjmxfvuzkktktergc.supabase.co/storage/v1/object/public/comprobantes/";
+  const URL_DB = "https://rvbllqsbkizsgcdrdhtp.supabase.co";
+  const KEY_DB = "sb_publishable_dPRQyXKOsrxdObzLCe0wrg_zhXLUbrK";
+  const BASE_STORAGE = "https://rvbllqsbkizsgcdrdhtp.supabase.co/storage/v1/object/public/comprobantes/";
   
   const supabaseCliente = supabase.createClient(URL_DB, KEY_DB, {
     realtime: { params: { eventsPerSecond: 1 } }
