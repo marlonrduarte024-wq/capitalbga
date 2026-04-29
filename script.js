@@ -239,24 +239,48 @@ async function enviarWhatsApp() {
 }
 
 async function confirmarYEnviar() {
-    const prefijo = document.querySelector('input[name="tipo_pedido"]:checked').value;
+    const radioChecked = document.querySelector('input[name="tipo_pedido"]:checked');
+    if (!radioChecked) {
+        alert("Por favor selecciona un tipo de pedido");
+        return;
+    }
+    
+    const prefijo = radioChecked.value;
     let msg = "";
+    const cb = `?cb=${Date.now()}`; 
+
+    // Construcción del mensaje para el sistema
     carrito.forEach(p => {
         msg += `${prefijo}|${p.codigo}|${p.cantidad}\n`;
-        if (p.observacion) msg += `${prefijo}|CONTROLRESTRICCIONES|0|0|${p.observacion.replace(/[|\n]/g, " ")}\n`;
+        if (p.observacion) {
+            msg += `${prefijo}|CONTROLRESTRICCIONES|0|0|${p.observacion.replace(/[|\n]/g, " ")}\n`;
+        }
     });
 
     try {
+        // Intentamos leer el archivo de configuración
         const r = await fetch(`${BUCKET_URL}/config_whatsapp1.txt${cb}`);
+        if (!r.ok) throw new Error("No se pudo acceder al archivo de configuración en el bucket.");
+        
         const t = await r.text();
-        const tel = t.match(/telefono=(.+)/)[1].trim();
-        window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, "_blank");
-    } catch {
-        window.open(`https://wa.me/573108094441?text=${encodeURIComponent(msg)}`, "_blank");
-    }
-    document.getElementById("modal-confirmacion").classList.remove("activo");
-}
+        const match = t.match(/telefono=(.+)/);
+        
+        if (match && match[1].trim()) {
+            const tel = match[1].trim();
+            window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, "_blank");
+        } else {
+            throw new Error("El formato del teléfono en el archivo .txt es incorrecto.");
+        }
 
+    } catch (error) {
+        console.error("Error crítico:", error);
+        alert("Error de configuración: No se pudo obtener el número de WhatsApp desde el servidor. Por favor, contacta a soporte.");
+    }
+
+    // Cerramos el modal
+    const modalConfirm = document.getElementById("modal-confirmacion");
+    if (modalConfirm) modalConfirm.classList.remove("activo");
+}
 // ============================================================
 // PROMOS Y UTILS
 // ============================================================
