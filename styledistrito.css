@@ -713,35 +713,42 @@ img:not([src]) {
 
 
 
-/* Contenedor para centrar el botón */
+/* Contenedor Flotante fijo en pantalla */
 .contenedor-flotante-menu {
+    position: fixed;
+    bottom: 20px; /* Distancia desde abajo */
+    left: 50%;
+    transform: translateX(-50%); /* Centrado perfecto */
+    width: 100%;
     display: flex;
     justify-content: center;
-    width: 100%;
-    margin: 20px 0; /* Espacio arriba y abajo */
-    position: sticky;
-    top: 10px; /* Se queda pegado arriba al bajar */
-    z-index: 99;
+    z-index: 999; /* Por encima de todo */
+    pointer-events: none; /* Para que no bloquee clicks en el fondo */
 }
 
-/* El botón grande */
+/* El botón grande y llamativo */
 .btn-menu-lateral {
-    background: #000; /* Negro elegante */
+    pointer-events: auto; /* Reactivamos clicks solo en el botón */
+    background: #000;
     color: #fff;
     border: none;
-    padding: 15px 40px; /* Más alto y ancho */
-    border-radius: 50px; /* Bordes muy redondeados */
-    font-size: 1.2rem; /* Texto más grande */
+    padding: 16px 0;
+    border-radius: 50px;
+    font-size: 1.1rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    width: 70%; /* Un poco más estilizado */
+    max-width: 300px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    transition: transform 0.2s;
-    width: 80%; /* Ocupa el 80% de la pantalla */
-    max-width: 400px; /* Pero no más de 400px en tablets/PC */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
+/* Efecto visual al tocarlo */
 .btn-menu-lateral:active {
-    transform: scale(0.95); /* Efecto de pulsado */
+    transform: scale(0.95);
+    background: #222;
 }
