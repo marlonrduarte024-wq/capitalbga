@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Distrito | Gestión</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: #f4f7f9; margin: 0; padding: 10px; box-sizing: border-box; }
+    .container { max-width: 100%; margin: auto; }
+    
+    #login-container { max-width: 90%; margin: 50px auto; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
+    .input-login { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #ddd; box-sizing: border-box; font-size: 16px; }
+
+    .tabs { display: flex; gap: 5px; margin-bottom: 15px; border-bottom: 2px solid #ddd; padding-bottom: 5px; overflow-x: auto; }
+    .tab-btn { padding: 10px 15px; border: none; background: none; cursor: pointer; font-weight: 600; color: #666; font-size: 0.9rem; white-space: nowrap; }
+    .tab-btn.active { color: #2563eb; border-bottom: 3px solid #2563eb; }
+
+    .card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 15px; }
+    
+    .info h3 { margin: 0; font-size: 1.1rem; color: #1e293b; display: flex; align-items: center; justify-content: space-between; }
+    .info p { margin: 5px 0; font-size: 0.9rem; color: #64748b; line-height: 1.4; }
+
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
+    .obs-text { width: 100%; min-height: 80px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; padding: 10px; font-size: 0.95rem; box-sizing: border-box; background: #f8fafc; }
+
+    .acciones { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+    .btn { flex: 1 1 45%; padding: 12px 8px; border-radius: 10px; border: 1px solid #ddd; cursor: pointer; font-weight: 600; font-family: inherit; font-size: 0.85rem; text-decoration: none; text-align: center; box-sizing: border-box; }
+    
+    .btn-ws { background: #25D366; color: white; border: none; flex: 1 1 100%; }
+    .btn-subir { background: #f1f5f9; color: #334155; border: 1px dashed #cbd5e1; }
+    .btn-finalizar { background: #2563eb; color: white; border: none; flex: 1 1 100%; font-size: 1rem; }
+    
+    .badge-deco { background: #fff3e0; color: #e65100; padding: 4px 8px; border-radius: 6px; font-weight: 700; font-size: 0.7rem; }
+
+    #admin-panel { display: none; }
+    
+    @media (max-width: 480px) {
+      h1 { font-size: 1.4rem; }
+      .card { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="login-container">
+  <h2>Distrito Admin</h2>
+  <input type="email" id="user_email" class="input-login" placeholder="Correo">
+  <input type="password" id="user_password" class="input-login" placeholder="Contraseña">
+  <button id="btn-login-action" class="btn btn-finalizar">Entrar</button>
+</div>
+
+<div id="admin-panel" class="container">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+    <h1 style="margin:0;">Reservas</h1>
+    <button id="btn-logout-action" class="btn" style="background:#fee2e2; color:#ef4444; border:none; flex:none; padding:8px 15px;">Salir</button>
+  </div>
+  
+  <div class="tabs">
+    <button class="tab-btn active" id="tab-pendientes">Entrantes</button>
+    <button class="tab-btn" id="tab-ingresados">Historial</button>
+  </div>
+  
+  <div id="lista-reservas">Cargando registros...</div>
+</div>
+
+<script>
+  const URL_DB = "https://mmtgjmxfvuzkktktergc.supabase.co";
+  const KEY_DB = "sb_publishable_-xeWh1E1WCqs7ABAvAF0TA_hafx6fpV";
+  const BASE_STORAGE = "https://mmtgjmxfvuzkktktergc.supabase.co/storage/v1/object/public/comprobantes/";
+  
+  const supabaseCliente = supabase.createClient(URL_DB, KEY_DB, {
+    realtime: { params: { eventsPerSecond: 1 } }
+  });
+
+  let tabActual = 'PENDIENTE';
+  const sonidoAlerta = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+
+  function activarEscuchaRealtime() {
+    const canalID = 'distrito_' + Math.random().toString(36).substring(7);
+    supabaseCliente.channel(canalID).on(
+      'postgres_changes', 
+      { event: 'INSERT', schema: 'public', table: 'reserva' }, 
+      (payload) => {
+        if (Notification.permission === "granted") {
+          navigator.serviceWorker.ready.then(reg => {
+            reg.showNotification("🔔 ¡Nueva Reserva!", {
+              body: `Cliente: ${payload.new.cliente}`,
+              icon: 'https://distrito.menwapp.com/imagenes/ASCOMP.png',
+              tag: 'reserva-nueva'
+            });
+          });
+        }
+        Swal.fire({ title: '¡NUEVA RESERVA!', text: payload.new.cliente, icon: 'success' });
+        sonidoAlerta.play().catch(() => {});
+        if (tabActual === 'PENDIENTE') dibujarLista();
+      }
+    ).subscribe();
+  }
+
+  async function dibujarLista() {
+    const { data, error } = await supabaseCliente
+      .from('reserva')
+      .select('*')
+      .eq('estado', tabActual)
+      .order('created_at', { ascending: false });
+
+    if (error) return;
+
+    const cont = document.getElementById("lista-reservas");
+    cont.innerHTML = data.length === 0 ? '<p style="text-align:center; padding:40px; color:#64748b;">No hay reservas aquí.</p>' : "";
+
+    data.forEach(res => {
+      const card = document.createElement("div");
+      card.className = "card";
+      const linkComp = res.comprobante_pago;
+
+      card.innerHTML = `
+        <div class="info">
+          <h3>
+            ${res.cliente} 
+            ${res.decoracion ? '<span class="badge-deco">✨ DECO</span>' : ''}
+          </h3>
+          <p>📅 ${res.fecha} | 🕒 ${res.hora_inicio}<br>👥 ${res.personas} pers. | 📞 ${res.telefono}</p>
+          
+          <div class="form-group">
+            <select id="tipo-pago-${res.id}" class="input-login" style="margin:0; height:45px; background:#fff;">
+              <option value="">¿Cómo pagó?</option>
+              <option value="Transferencia" ${res.tipo_pago === 'Transferencia' ? 'selected' : ''}>Transferencia</option>
+              <option value="Efectivo" ${res.tipo_pago === 'Efectivo' ? 'selected' : ''}>Efectivo</option>
+              <option value="Datafono" ${res.tipo_pago === 'Datafono' ? 'selected' : ''}>Datáfono</option>
+            </select>
+            <textarea id="obs-${res.id}" class="obs-text" placeholder="Escribe aquí las observaciones...">${res.observaciones || ''}</textarea>
+          </div>
+        </div>
+
+  <div class="acciones">
+          ${res.estado === 'PENDIENTE' ? 
+            `<button class="btn" style="background:#2563eb; color:white; flex:1 1 100%; border:none; margin-bottom:5px;" 
+                     onclick='enviarBienvenida(${JSON.stringify(res)})'>
+               📩 Enviar Bienvenida
+             </button>` : ''
+          }
+
+          <a href="https://wa.me/${res.telefono.replace(/\D/g, "")}" target="_blank" class="btn btn-ws">📱 Chat Libre</a>
+          
+          <input type="file" id="input-f-${res.id}" style="display:none" accept="image/*">
+          <button class="btn btn-subir" onclick="document.getElementById('input-f-${res.id}').click()">
+            ${res.pago == 1 ? '✅ Pagado' : '📤 Subir Pago'}
+          </button>
+          
+          ${linkComp ? `<a href="${linkComp}" target="_blank" class="btn" style="background:#f1f5f9; color:#2563eb;">👁️ Ver Foto</a>` : ''}
+          
+          <button class="btn btn-finalizar" onclick="procesarFinalizar('${res.id}')">
+            ${tabActual === 'INGRESADO' ? 'Guardado ✅' : 'Finalizar Reserva'}
+          </button>
+        </div>
+      `;
+      cont.appendChild(card);
+
+      const input = document.getElementById(`input-f-${res.id}`);
+      if(input) {
+        input.onchange = async (e) => {
+          const file = e.target.files[0];
+          if(!file) return;
+          Swal.fire({ title: 'Subiendo...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+          
+          const nameOnly = `comp_${res.id}_${Date.now()}.jpg`;
+          const { error: errUp } = await supabaseCliente.storage.from('comprobantes').upload(nameOnly, file);
+          
+          if(!errUp) {
+            await supabaseCliente.from('reserva').update({ 
+              comprobante_pago: BASE_STORAGE + nameOnly,
+              pago: 1 
+            }).eq('id', res.id);
+            Swal.close();
+            dibujarLista();
+          } else {
+            Swal.fire('Error', 'No se pudo subir la imagen', 'error');
+          }
+        };
+      }
+    });
+  }
+
+  async function procesarFinalizar(id) {
+    if(tabActual === 'INGRESADO') return;
+
+    const tipoPago = document.getElementById(`tipo-pago-${id}`).value;
+    const observaciones = document.getElementById(`obs-${id}`).value;
+
+    Swal.fire({ title: 'Guardando...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+    const { error } = await supabaseCliente.from('reserva').update({ 
+      estado: 'INGRESADO',
+      tipo_pago: tipoPago,
+      observaciones: observaciones
+    }).eq('id', id);
+
+    if(!error) {
+      Swal.fire({ icon: 'success', title: '¡Listo!', timer: 1500, showConfirmButton: false });
+      dibujarLista();
+    } else {
+      Swal.fire('Error', 'Hubo un problema al guardar', 'error');
+    }
+  }
+
+  document.getElementById('btn-login-action').onclick = async () => {
+    const email = document.getElementById('user_email').value;
+    const password = document.getElementById('user_password').value;
+    const { error } = await supabaseCliente.auth.signInWithPassword({ email, password });
+    if (error) Swal.fire('Error', 'Credenciales incorrectas', 'error');
+    else revisarSesion();
+  };
+
+  document.getElementById('btn-logout-action').onclick = async () => {
+    await supabaseCliente.auth.signOut();
+    revisarSesion();
+  };
+
+  async function revisarSesion() {
+    const { data: { session } } = await supabaseCliente.auth.getSession();
+    if (session) {
+      document.getElementById('login-container').style.display = 'none';
+      document.getElementById('admin-panel').style.display = 'block';
+      if ("Notification" in window && Notification.permission !== "granted") Notification.requestPermission();
+      activarEscuchaRealtime();
+      dibujarLista();
+    } else {
+      document.getElementById('login-container').style.display = 'block';
+      document.getElementById('admin-panel').style.display = 'none';
+    }
+  }
+
+  document.getElementById('tab-pendientes').onclick = function() {
+    tabActual = 'PENDIENTE';
+    actualizarPestañas(this);
+    dibujarLista();
+  };
+
+  document.getElementById('tab-ingresados').onclick = function() {
+    tabActual = 'INGRESADO';
+    actualizarPestañas(this);
+    dibujarLista();
+  };
+
+  function actualizarPestañas(btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  revisarSesion();
+
+  function enviarBienvenida(res) {
+  const tel = res.telefono.replace(/\D/g, "");
+  const telFinal = tel.startsWith("57") ? tel : "57" + tel;
+  
+  const mensaje = `Hola ${res.cliente}, recibimos tu solicitud de reserva con los siguientes datos:
+📅 Fecha: ${res.fecha}
+🕒 Hora: ${res.hora_inicio}
+👥 Personas: ${res.personas}
+✨ Motivo: ${res.motivo || 'General'}
+
+¿Deseas continuar con el proceso?`;
+
+  window.open(`https://wa.me/${telFinal}?text=${encodeURIComponent(mensaje)}`, '_blank');
+}
+</script>
+</body>
+</html>
