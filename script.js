@@ -458,13 +458,14 @@ function renderMenu() {
         btn.innerText = cat;
         if (idx === 0) btn.classList.add("activo");
         
-        btn.onclick = (e) => {
-            document.querySelectorAll("#nav-categorias button").forEach(b => b.classList.remove("activo"));
-            e.target.classList.add("activo");
-            
-            cambiarCategoria(cat);
-            toggleCategorias(); // Cierra el menú lateral sin hacer scroll
-        };
+    btn.onclick = (e) => {
+        document.querySelectorAll("#nav-categorias button").forEach(b => b.classList.remove("activo"));
+        e.target.classList.add("activo");
+    
+        cambiarCategoria(cat); // Muestra los productos de la categoría
+        toggleCategorias();    // Cierra el menú lateral
+        // No hace falta scroll, el usuario se queda donde estaba pero con nuevo contenido
+    };
         navCont.appendChild(btn);
 
         // Bloque de productos de la categoría
