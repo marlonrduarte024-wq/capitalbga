@@ -677,18 +677,22 @@ img:not([src]) {
 }
 
 .categorias-nav button {
-    text-align: left;
-    padding: 15px;
-    border: none;
-    background: none;
-    font-size: 1rem;
-    border-radius: 8px;
+    text-align: center; /* Centrar texto del grupo */
+    padding: 18px; 
+    margin-bottom: 8px;
+    border: 1px solid #eee;
+    background: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 12px;
     width: 100%;
+    color: #333;
 }
 
 .categorias-nav button.activo {
-    background: #ffe082;
-    font-weight: bold;
+    background: #000;
+    color: #fff;
+    border-color: #000;
 }
 
 /* Oscurecer el fondo */
@@ -705,4 +709,39 @@ img:not([src]) {
 
 #overlay-sidebar.activo {
     display: block;
+}
+
+
+
+/* Contenedor para centrar el botón */
+.contenedor-flotante-menu {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 20px 0; /* Espacio arriba y abajo */
+    position: sticky;
+    top: 10px; /* Se queda pegado arriba al bajar */
+    z-index: 99;
+}
+
+/* El botón grande */
+.btn-menu-lateral {
+    background: #000; /* Negro elegante */
+    color: #fff;
+    border: none;
+    padding: 15px 40px; /* Más alto y ancho */
+    border-radius: 50px; /* Bordes muy redondeados */
+    font-size: 1.2rem; /* Texto más grande */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+    width: 80%; /* Ocupa el 80% de la pantalla */
+    max-width: 400px; /* Pero no más de 400px en tablets/PC */
+}
+
+.btn-menu-lateral:active {
+    transform: scale(0.95); /* Efecto de pulsado */
 }
