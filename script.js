@@ -399,20 +399,32 @@ document.addEventListener("DOMContentLoaded", () => {
 // ============================================================
 // SISTEMA BASE (RENDER, PORTADA, HORARIO)
 // ============================================================
+function toggleCategorias() {
+    document.getElementById("sidebar-categorias").classList.toggle("activo");
+    document.getElementById("overlay-sidebar").classList.toggle("activo");
+}
+
 function renderMenu() {
     const menuCont = document.getElementById("menu");
     const navCont = document.getElementById("nav-categorias");
     if (!menuCont || !menuData) return;
     menuCont.innerHTML = ""; navCont.innerHTML = "";
 
+    // --- SECCIÓN: RECOMENDADOS DEL CHEF (La que añadimos antes) ---
+    // ... (Mantén aquí el código de los recomendados que pusimos en el paso anterior)
+
     Object.keys(menuData).forEach((cat, idx) => {
         const btn = document.createElement("button");
         btn.innerText = cat;
         if (idx === 0) btn.classList.add("activo");
+        
         btn.onclick = (e) => {
             document.querySelectorAll(".categorias-nav button").forEach(b => b.classList.remove("activo"));
             e.target.classList.add("activo");
+            
             cambiarCategoria(cat);
+            toggleCategorias(); // <--- CIERRA EL MENÚ AL SELECCIONAR
+            window.scrollTo({ top: 0, behavior: 'smooth' }); // Sube al inicio al cambiar
         };
         navCont.appendChild(btn);
 
@@ -421,6 +433,7 @@ function renderMenu() {
         divCat.id = "cat-" + cat.replace(/\s+/g, "");
         divCat.style.display = idx === 0 ? "block" : "none";
 
+        // ... (Resto de tu lógica de renderizado de productos con banners y estrellas)
         let html = "";
         if (menuConfig?.banners_categoria?.[cat]) {
             html += `<div class="banner-categoria-grupo"><img src="${limpiarRuta(menuConfig.banners_categoria[cat])}"></div>`;
@@ -431,6 +444,8 @@ function renderMenu() {
             const cod = String(p.codigo).trim();
             const img = imagenes[cod] || p.imagen;
             const esRec = menuConfig?.recomendados?.includes(cod);
+            const desc = descripciones[cod] || ""; // Añadimos descripción
+
             html += `
                 <div class="card-producto" onclick='abrirModalProducto(${JSON.stringify(p)})'>
                     <div class="contenedor-media">
@@ -440,6 +455,7 @@ function renderMenu() {
                     <div class="info">
                         <span class="nombre">${p.articulo}</span>
                         <span class="precio">$${Number(p.precio).toLocaleString()}</span>
+                        ${desc ? `<p class="descripcion-corta">${desc}</p>` : ''}
                     </div>
                 </div>`;
         });
@@ -447,7 +463,6 @@ function renderMenu() {
         menuCont.appendChild(divCat);
     });
 }
-
 function verificarHorario() {
     if (!menuConfig?.horarios) return true;
     const ahora = new Date();
