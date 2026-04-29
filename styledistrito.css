@@ -621,3 +621,88 @@ img:not([src]) {
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     pointer-events: none; /* Que no interfiera con el click */
 }
+
+
+
+/* Botón flotante para abrir categorías */
+.btn-menu-lateral {
+    position: sticky;
+    top: 10px;
+    left: 10px;
+    z-index: 99;
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    margin: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px; /* Escondido */
+    width: 280px;
+    height: 100%;
+    background: white;
+    z-index: 1000;
+    transition: 0.3s;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.activo {
+    left: 0; /* Se muestra */
+}
+
+.sidebar-header {
+    padding: 20px;
+    background: #f8f8f8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.categorias-nav {
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column; /* Lista vertical */
+    gap: 5px;
+}
+
+.categorias-nav button {
+    text-align: left;
+    padding: 15px;
+    border: none;
+    background: none;
+    font-size: 1rem;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.categorias-nav button.activo {
+    background: #ffe082;
+    font-weight: bold;
+}
+
+/* Oscurecer el fondo */
+#overlay-sidebar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+}
+
+#overlay-sidebar.activo {
+    display: block;
+}
