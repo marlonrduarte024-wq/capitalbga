@@ -249,13 +249,13 @@ function agregarDesdeModal() {
     const obs = document.getElementById("modal-obs").value.trim();
     const cantPrincipal = parseInt(document.getElementById("modal-cantidad").value) || 1;
     
-    // 1. Obtener Acompañamientos (Radios originales)
+    // 1. Obtener Acompañamientos (Radios originales - No suman precio)
     const seleccionados = Array.from(document.querySelectorAll("#modal-acompanamientos-list input[type='radio']:checked")).map(c => c.value);
     
     let finalObs = seleccionados.length ? "Con: " + seleccionados.join(", ") : "";
     if (obs) finalObs += (finalObs ? " | " : "") + obs;
 
-    // 2. Agregar Producto Principal al carrito
+    // 2. Agregar Producto Principal
     const itemPrincipal = { 
         codigo: String(productoModal.codigo).trim(), 
         nombre: productoModal.articulo, 
@@ -268,20 +268,26 @@ function agregarDesdeModal() {
     if (indexPrincipal > -1) carrito[indexPrincipal].cantidad += cantPrincipal; 
     else carrito.push(itemPrincipal);
 
-    // 3. Agregar Adicionales como items independientes si su cantidad es > 0
+    // 3. Agregar Adicionales con PRECIO REAL del menú
     const inputsAdic = document.querySelectorAll(".input-adic");
     inputsAdic.forEach(input => {
         const cantAdic = parseInt(input.value);
         if (cantAdic > 0) {
+            const codAdic = String(input.dataset.codigo).trim();
+            
+            // BUSCAR EL PRODUCTO EN EL MENÚ PARA OBTENER SU PRECIO
+            const productoEnMenu = encontrarProductoPorCodigo(codAdic); 
+            const precioReal = productoEnMenu ? Number(productoEnMenu.precio) : 0;
+
             const adicionalItem = {
-                codigo: String(input.dataset.codigo).trim(),
+                codigo: codAdic,
                 nombre: `(+) ${input.dataset.nombre}`, 
-                precio: 0, // El precio se vincula por código en tu sistema de WhatsApp
-                observacion: `Para: ${productoModal.articulo}`,
+                precio: precioReal, // <--- AQUÍ ya no es 0, toma el valor del JSON
+                observacion: `Adicional para: ${productoModal.articulo}`,
                 cantidad: cantAdic
             };
             
-            // Buscar si ya existe ese adicional exacto para este producto
+            // Evitar duplicados de adicionales en el carrito
             const indexAdic = carrito.findIndex(x => x.codigo === adicionalItem.codigo && x.observacion === adicionalItem.observacion);
             if (indexAdic > -1) carrito[indexAdic].cantidad += cantAdic;
             else carrito.push(adicionalItem);
