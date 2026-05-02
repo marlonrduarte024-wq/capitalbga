@@ -12,8 +12,6 @@ let adicionalesConfig = { grupos: {}, productos: {} }; // Nueva variable
 
 
 
-
-
 const BUCKET_URL = "https://rvbllqsbkizsgcdrdhtp.supabase.co/storage/v1/object/public/conf_pagina";
 const cb = `?t=${new Date().getTime()}`; 
 
@@ -178,6 +176,12 @@ function cambiarCantidad(delta) {
     if (val < 1) val = 1;
     input.value = val;
 }
+function cambiarCantAdic(btn, delta) {
+    const input = btn.parentElement.querySelector('.input-adic');
+    let val = parseInt(input.value) + delta;
+    if (val < 0) val = 0;
+    input.value = val;
+}
 
 function cerrarModalProducto() {
     document.getElementById("modal-producto").classList.remove("activo");
@@ -245,12 +249,13 @@ function agregarDesdeModal() {
     const obs = document.getElementById("modal-obs").value.trim();
     const cantPrincipal = parseInt(document.getElementById("modal-cantidad").value) || 1;
     
-    // 1. Obtener Acompañamientos (Radios)
-    const acompañamientos = Array.from(document.querySelectorAll("#modal-acompanamientos-list input:checked")).map(c => c.value);
-    let finalObs = acompañamientos.length ? "Con: " + acompañamientos.join(", ") : "";
+    // 1. Obtener Acompañamientos (Radios originales)
+    const seleccionados = Array.from(document.querySelectorAll("#modal-acompanamientos-list input[type='radio']:checked")).map(c => c.value);
+    
+    let finalObs = seleccionados.length ? "Con: " + seleccionados.join(", ") : "";
     if (obs) finalObs += (finalObs ? " | " : "") + obs;
 
-    // 2. Agregar Producto Principal
+    // 2. Agregar Producto Principal al carrito
     const itemPrincipal = { 
         codigo: String(productoModal.codigo).trim(), 
         nombre: productoModal.articulo, 
@@ -258,29 +263,35 @@ function agregarDesdeModal() {
         observacion: finalObs, 
         cantidad: cantPrincipal 
     };
-    carrito.push(itemPrincipal);
 
-    // 3. Agregar Adicionales como items normales
+    const indexPrincipal = carrito.findIndex(x => x.codigo === itemPrincipal.codigo && x.observacion === itemPrincipal.observacion);
+    if (indexPrincipal > -1) carrito[indexPrincipal].cantidad += cantPrincipal; 
+    else carrito.push(itemPrincipal);
+
+    // 3. Agregar Adicionales como items independientes si su cantidad es > 0
     const inputsAdic = document.querySelectorAll(".input-adic");
     inputsAdic.forEach(input => {
         const cantAdic = parseInt(input.value);
         if (cantAdic > 0) {
             const adicionalItem = {
-                codigo: input.dataset.codigo,
-                nombre: `(+) ${input.dataset.nombre}`, // Se le añade un prefijo para identificarlo
-                precio: 0, // El precio se gestiona por código en el sistema, o puedes buscarlo si es necesario
-                observacion: `Adicional para ${productoModal.articulo}`,
+                codigo: String(input.dataset.codigo).trim(),
+                nombre: `(+) ${input.dataset.nombre}`, 
+                precio: 0, // El precio se vincula por código en tu sistema de WhatsApp
+                observacion: `Para: ${productoModal.articulo}`,
                 cantidad: cantAdic
             };
-            carrito.push(adicionalItem);
+            
+            // Buscar si ya existe ese adicional exacto para este producto
+            const indexAdic = carrito.findIndex(x => x.codigo === adicionalItem.codigo && x.observacion === adicionalItem.observacion);
+            if (indexAdic > -1) carrito[indexAdic].cantidad += cantAdic;
+            else carrito.push(adicionalItem);
         }
     });
 
     actualizarVistaCarrito();
     cerrarModalProducto();
-    mostrarToast(`Pedido actualizado`);
+    mostrarToast(`Agregado correctamente`);
 }
-
 async function enviarWhatsApp() {
     if (!verificarHorario()) {
         Swal.fire("Cerrado", "Lo sentimos, no estamos recibiendo pedidos ahora.", "error");
