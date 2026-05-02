@@ -41,10 +41,13 @@ async function inicializarApp() {
             cargarArchivo(`${BUCKET_URL}/promo.json${cb}`),
             cargarArchivo(`${BUCKET_URL}/sugeridos_promo.json${cb}`),
             cargarArchivo(`${BUCKET_URL}/acompanamientos.json${cb}`),
-            cargarArchivo(`${BUCKET_URL}/adicionales.json${cb}`)
+            cargarArchivo(`${BUCKET_URL}/adicionales.json${cb}`),
+            cargarArchivo(`${BUCKET_URL}/grupo1.json${cb}`) //
         ]);
 
-        const [mRaw, cfg, desc, img, prm, sug, acmp, adic] = resultados;
+        const [mRaw, cfg, desc, img, prm, sug, acmp, adic, grupoPrincipal] = resultados;
+        // Guardamos el nombre exacto: "HAMBURGUESAS"
+        window.categoriaInicial = grupoPrincipal?.nombre || Object.keys(menuData)[0];
         adicionalesConfig = adic || { grupos: {}, productos: {} };
 
         if (mRaw && mRaw.menu) {
@@ -510,19 +513,41 @@ function renderMenu() {
     const menuCont = document.getElementById("menu");
     const navCont = document.getElementById("nav-categorias");
     if (!menuCont || !menuData) return;
+    
     menuCont.innerHTML = ""; 
     navCont.innerHTML = "";
 
+    const categorias = Object.keys(menuData);
+
     // --- SECCIÓN: RECOMENDADOS DEL CHEF ---
     if (menuConfig?.recomendados && menuConfig.recomendados.length > 0) {
+        // 1. Botón en el NAV para Recomendados
+        const btnChef = document.createElement("button");
+        btnChef.innerText = "⭐ Recomendados";
+        
+        // Lo marcamos como activo porque siempre se verá al inicio
+        btnChef.classList.add("activo");
+
+        btnChef.onclick = (e) => {
+            document.querySelectorAll("#nav-categorias button").forEach(b => b.classList.remove("activo"));
+            e.target.classList.add("activo");
+            cambiarCategoria("recomendados");
+            toggleCategorias();
+        };
+        navCont.appendChild(btnChef);
+
+        // 2. Bloque de productos Recomendados
         const divChef = document.createElement("div");
         divChef.className = "bloque-categoria seccion-chef";
         divChef.id = "cat-recomendados";
+        
+        // SIEMPRE visible al inicializar
+        divChef.style.display = "block";
 
-        let htmlChef = `<h3 class="titulo-categoria">👨‍🍳 Recomendados del Chef</h3><div class="grid-productos">`;
+        let htmlChef = `<h3 class="titulo-categoria">👨‍🍳 Recomendados del chef 👨‍🍳</h3><div class="grid-productos">`;
         let hayRecomendados = false;
 
-        Object.keys(menuData).forEach(cat => {
+        categorias.forEach(cat => {
             menuData[cat].forEach(p => {
                 const cod = String(p.codigo).trim();
                 if (menuConfig.recomendados.includes(cod)) {
@@ -550,27 +575,28 @@ function renderMenu() {
     }
 
     // --- RENDERIZADO DE CATEGORÍAS ---
-    Object.keys(menuData).forEach((cat, idx) => {
-        // Botón para el Sidebar
+    categorias.forEach((cat) => {
+        const esInicial = (cat === window.categoriaInicial);
+
         const btn = document.createElement("button");
         btn.innerText = cat;
-        if (idx === 0) btn.classList.add("activo");
+        // También marcamos como activo el botón del grupo1.json
+        if (esInicial) btn.classList.add("activo");
         
-    btn.onclick = (e) => {
-        document.querySelectorAll("#nav-categorias button").forEach(b => b.classList.remove("activo"));
-        e.target.classList.add("activo");
-    
-        cambiarCategoria(cat); // Muestra los productos de la categoría
-        toggleCategorias();    // Cierra el menú lateral
-        // No hace falta scroll, el usuario se queda donde estaba pero con nuevo contenido
-    };
+        btn.onclick = (e) => {
+            document.querySelectorAll("#nav-categorias button").forEach(b => b.classList.remove("activo"));
+            e.target.classList.add("activo");
+            cambiarCategoria(cat);
+            toggleCategorias();
+        };
         navCont.appendChild(btn);
 
-        // Bloque de productos de la categoría
         const divCat = document.createElement("div");
         divCat.className = "bloque-categoria";
         divCat.id = "cat-" + cat.replace(/\s+/g, "");
-        divCat.style.display = idx === 0 ? "block" : "none";
+        
+        // SIEMPRE visible al inicializar si es el grupo del JSON
+        divCat.style.display = esInicial ? "block" : "none";
 
         let html = "";
         if (menuConfig?.banners_categoria?.[cat]) {
