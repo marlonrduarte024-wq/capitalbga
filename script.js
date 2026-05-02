@@ -12,9 +12,7 @@ let adicionalesConfig = { grupos: {}, productos: {} }; // Nueva variable
 
 
 
-// Y en la asignación de resultados:
-const [mRaw, cfg, desc, img, prm, sug, acmp, adic] = resultados;
-adicionalesConfig = adic || { grupos: {}, productos: {} };
+
 
 const BUCKET_URL = "https://rvbllqsbkizsgcdrdhtp.supabase.co/storage/v1/object/public/conf_pagina";
 const cb = `?t=${new Date().getTime()}`; 
