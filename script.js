@@ -8,6 +8,13 @@ let descripciones = {};
 let imagenes = {};
 let acompanamientosConfig = { grupos: {}, productos: {} };
 let productoModal = null;
+let adicionalesConfig = { grupos: {}, productos: {} }; // Nueva variable
+
+
+
+// Y en la asignación de resultados:
+const [mRaw, cfg, desc, img, prm, sug, acmp, adic] = resultados;
+adicionalesConfig = adic || { grupos: {}, productos: {} };
 
 const BUCKET_URL = "https://rvbllqsbkizsgcdrdhtp.supabase.co/storage/v1/object/public/conf_pagina";
 const cb = `?t=${new Date().getTime()}`; 
@@ -37,10 +44,12 @@ async function inicializarApp() {
             cargarArchivo(`${BUCKET_URL}/imagenes.json${cb}`),
             cargarArchivo(`${BUCKET_URL}/promo.json${cb}`),
             cargarArchivo(`${BUCKET_URL}/sugeridos_promo.json${cb}`),
-            cargarArchivo(`${BUCKET_URL}/acompanamientos.json${cb}`)
+            cargarArchivo(`${BUCKET_URL}/acompanamientos.json${cb}`),
+            cargarArchivo(`${BUCKET_URL}/adicionales.json${cb}`)
         ]);
 
-        const [mRaw, cfg, desc, img, prm, sug, acmp] = resultados;
+        const [mRaw, cfg, desc, img, prm, sug, acmp, adic] = resultados;
+        adicionalesConfig = adic || { grupos: {}, productos: {} };
 
         if (mRaw && mRaw.menu) {
             menuData = mRaw.menu;
@@ -93,9 +102,11 @@ function abrirModalProducto(p) {
     document.getElementById("modal-obs").value = "";
     document.getElementById("modal-cantidad").value = 1;
 
-    // Acompañamientos
+    // Contenedor principal de opciones
     const listCont = document.getElementById("modal-acompanamientos-list");
     listCont.innerHTML = "";
+
+    // --- SECCIÓN: ACOMPAÑAMIENTOS (Lógica Original) ---
     if (acompanamientosConfig?.productos?.[cod]) {
         acompanamientosConfig.productos[cod].forEach(nombreGrupo => {
             const opciones = acompanamientosConfig.grupos[nombreGrupo];
@@ -110,6 +121,37 @@ function abrirModalProducto(p) {
                         </label>`;
                 });
                 listCont.appendChild(div);
+            }
+        });
+    }
+
+    // --- SECCIÓN: ADICIONALES (Nueva Lógica con Cantidades) ---
+    if (adicionalesConfig?.productos?.[cod]) {
+        adicionalesConfig.productos[cod].forEach(nombreGrupo => {
+            const opciones = adicionalesConfig.grupos[nombreGrupo];
+            if (opciones) {
+                const divAdic = document.createElement("div");
+                divAdic.className = "seccion-adicionales";
+                divAdic.innerHTML = `<h4 style="margin:20px 0 10px 0; font-size:0.9rem; border-top:1px solid #eee; padding-top:10px;">${nombreGrupo}:</h4>`;
+                
+                opciones.forEach(op => {
+                    const itemDiv = document.createElement("div");
+                    itemDiv.style = "display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; background:#f4f4f4; padding:8px 12px; border-radius:10px;";
+                    itemDiv.innerHTML = `
+                        <span style="font-size:0.85rem; font-weight:600; color:#333;">${op.nombre}</span>
+                        <div class="controles-cantidad-adic" style="display:flex; align-items:center; gap:12px;">
+                            <button onclick="cambiarCantAdic(this, -1)" style="width:28px; height:28px; border-radius:50%; border:1px solid #ddd; background:#fff; cursor:pointer; font-weight:bold;">-</button>
+                            <input type="number" class="input-adic" 
+                                   data-codigo="${op.codigo}" 
+                                   data-nombre="${op.nombre}" 
+                                   value="0" readonly 
+                                   style="width:25px; text-align:center; border:none; background:transparent; font-weight:bold; font-size:0.9rem;">
+                            <button onclick="cambiarCantAdic(this, 1)" style="width:28px; height:28px; border-radius:50%; border:1px solid #ddd; background:#fff; cursor:pointer; font-weight:bold;">+</button>
+                        </div>
+                    `;
+                    divAdic.appendChild(itemDiv);
+                });
+                listCont.appendChild(divAdic);
             }
         });
     }
@@ -201,27 +243,44 @@ function actualizarVistaCarrito() {
 
 function agregarDesdeModal() {
     if (!productoModal) return;
-    const seleccionados = Array.from(document.querySelectorAll("#modal-acompanamientos-list input:checked")).map(c => c.value);
-    const obs = document.getElementById("modal-obs").value.trim();
-    const cant = parseInt(document.getElementById("modal-cantidad").value) || 1;
     
-    let finalObs = seleccionados.length ? "Con: " + seleccionados.join(", ") : "";
+    const obs = document.getElementById("modal-obs").value.trim();
+    const cantPrincipal = parseInt(document.getElementById("modal-cantidad").value) || 1;
+    
+    // 1. Obtener Acompañamientos (Radios)
+    const acompañamientos = Array.from(document.querySelectorAll("#modal-acompanamientos-list input:checked")).map(c => c.value);
+    let finalObs = acompañamientos.length ? "Con: " + acompañamientos.join(", ") : "";
     if (obs) finalObs += (finalObs ? " | " : "") + obs;
 
-    const item = { 
+    // 2. Agregar Producto Principal
+    const itemPrincipal = { 
         codigo: String(productoModal.codigo).trim(), 
         nombre: productoModal.articulo, 
         precio: Number(productoModal.precio), 
         observacion: finalObs, 
-        cantidad: cant 
+        cantidad: cantPrincipal 
     };
+    carrito.push(itemPrincipal);
 
-    const index = carrito.findIndex(x => x.codigo === item.codigo && x.observacion === item.observacion);
-    if (index > -1) carrito[index].cantidad += cant; else carrito.push(item);
+    // 3. Agregar Adicionales como items normales
+    const inputsAdic = document.querySelectorAll(".input-adic");
+    inputsAdic.forEach(input => {
+        const cantAdic = parseInt(input.value);
+        if (cantAdic > 0) {
+            const adicionalItem = {
+                codigo: input.dataset.codigo,
+                nombre: `(+) ${input.dataset.nombre}`, // Se le añade un prefijo para identificarlo
+                precio: 0, // El precio se gestiona por código en el sistema, o puedes buscarlo si es necesario
+                observacion: `Adicional para ${productoModal.articulo}`,
+                cantidad: cantAdic
+            };
+            carrito.push(adicionalItem);
+        }
+    });
 
     actualizarVistaCarrito();
     cerrarModalProducto();
-    mostrarToast(`${item.nombre} agregado al pedido`);
+    mostrarToast(`Pedido actualizado`);
 }
 
 async function enviarWhatsApp() {
